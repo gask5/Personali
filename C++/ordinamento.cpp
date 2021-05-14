@@ -37,7 +37,7 @@ int main()
     for(int i = 0; i < N; i++){
         v[i]=rand()%100000;
     }
-    //stampa(v,N);
+    stampa(v,N);
     insertionsort(v,N);
     stampa(v,N);
     
