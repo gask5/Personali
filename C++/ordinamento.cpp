@@ -39,7 +39,7 @@ int main()
     }
     //stampa(v,N);
     insertionsort(v,N);
-    //stampa(v,N);
+    stampa(v,N);
     
     
 }
