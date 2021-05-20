@@ -49,5 +49,4 @@ int main(){
         a.insert(i);
     }
     a.print();
-    //testa e c
 }
