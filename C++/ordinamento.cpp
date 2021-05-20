@@ -46,7 +46,7 @@ int main()
 
 int posmax(int *v, int n){
     int p = 0;
-    for(int i = 1; i<n; i++){
+    for(int i = 1; i< n; i++){
         if(v[i]>v[p]) p = i;
     }
     return p;
