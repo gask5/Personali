@@ -49,6 +49,5 @@ int main(){
         a.insert(i);
     }
     a.print();
-    //cout<<"Array di dimensione "<<a.getDimensione()<<endl;
-    //cout<<"ciao";
+
 }
