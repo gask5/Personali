@@ -50,4 +50,5 @@ int main(){
     }
     a.print();
     //cout<<"Array di dimensione "<<a.getDimensione()<<endl;
+    cout<<"ciao";
 }
