@@ -43,4 +43,9 @@ class Veicolo{
 
         virtual string toString() const = 0;
 
+        friend ostream& operator<<(ostream& os, const Veicolo& v){
+            os << v.toString();
+            return os;
+        }
+
 };

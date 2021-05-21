@@ -1,4 +1,3 @@
-#include "moto.hpp"
 #include "auto.hpp"
 
 int main(){

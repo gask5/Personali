@@ -12,9 +12,5 @@ class Moto : public Veicolo{
             return stream.str();
         }
 
-        friend ostream& operator<<(ostream& os, const Veicolo& v){
-            os << v.toString();
-            return os;
-        }
 
 };
