@@ -8,14 +8,14 @@ class Corsa{
         int durata;
         int nVeicoli;
         Veicolo** veicoli;
-        int* distanzaVeicoli;
+        unsigned int* distanzaVeicoli;
     public:
         Corsa(int _durata, int _nVeicoli) : durata(_durata), nVeicoli(_nVeicoli){
             veicoli = new Veicolo*[nVeicoli];
-            distanzaVeicoli = new int[nVeicoli];
+            distanzaVeicoli = new unsigned int[nVeicoli];
             for(int i = 0; i < nVeicoli; i++){
                 distanzaVeicoli[i]=0;
-                veicoli[i] = new Auto(rand()%31+70, rand()%20000 + 5000, "Auto", rand()%2001 + 500 + "cc", "A siccu");
+                veicoli[i] = new Auto(rand()%20+1, rand()%20000 + 5000, "Auto", rand()%2001 + 500 + "cc", "A siccu");
             }
         }
 
@@ -23,6 +23,7 @@ class Corsa{
 
         ~Corsa(){
             delete[] veicoli;
+            delete[] distanzaVeicoli;
         }
 
         void stampaClassifica(){
@@ -32,6 +33,8 @@ class Corsa{
         }
         
         void sorpasso(int i, int j){
+            cout << veicoli[i]->getVelocitaMassima() << " a distanza "<< distanzaVeicoli[i] << " sorpassa " 
+                 << veicoli[j]->getVelocitaMassima()<< " a distanza "<< distanzaVeicoli[j] << endl;
             Veicolo* tmp = veicoli[j];
             veicoli[j] = veicoli[i];
             veicoli[i] = tmp;
@@ -44,7 +47,6 @@ class Corsa{
             for(int i = nVeicoli-1 ; i>0 ; i--)
                 for(int j= i ; j>0  ; j--){
                     if(distanzaVeicoli[j]>distanzaVeicoli[j-1]){
-                        //cout << veicoli[j]->getVelocitaMassima() << " sorpassa " << veicoli[j-1]->getVelocitaMassima() << endl;
                         sorpasso(j,j-1);
                     }
                 }
