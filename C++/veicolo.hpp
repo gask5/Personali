@@ -1,6 +1,9 @@
 #include "iostream"
 #include <sstream>
 
+#ifndef VEICOLO_HPP //evita di ridefinire la classe se e` inclusa in piu` file
+#define VEICOLO_HPP //se non e` stato mai definito, cio` che va da riga 5 , fino ad #endif
+
 using namespace std;
 
 class Veicolo{
@@ -49,3 +52,5 @@ class Veicolo{
         }
 
 };
+
+#endif
