@@ -1,9 +1,6 @@
-#include "auto.hpp"
-#include "moto.hpp"
+#include "corsa.hpp"
 
 int main(){
-    Moto m(100,10000,"Ducati","500cc", "Benzina");
-    Auto a(200,15000,"Fiat","1300cc", "Diesel");
-    cout<< m << endl;
-    cout<< a;
+    Corsa c1(100000,10);
+    c1.partenza();
 }
