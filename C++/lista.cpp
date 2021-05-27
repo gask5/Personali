@@ -18,7 +18,7 @@ template<class T> class Nodo{
             this->next = _next;
         }
 
-        Nodo<T>* getNext(){
+        Nodo<T>* getNext() const {
             return this->next;
         }
 
@@ -26,7 +26,7 @@ template<class T> class Nodo{
             this->prev = _prev;
         }
 
-        Nodo<T>* getPrev(){
+        Nodo<T>* getPrev() const {
             return this->prev;
         }
 
@@ -35,7 +35,7 @@ template<class T> class Nodo{
             valore = new T (_valore);
         }
 
-        T getValore(){
+        T getValore() const {
             return *valore;
         }
 
@@ -95,7 +95,7 @@ class Lista{
             Nodo<T>* prec = NULL;
             Nodo<T>* attuale = head;
             //cout<<"Riga 97";
-            while(attuale&&attuale->getValore()<valore){
+            while(attuale && attuale->getValore()<valore){
                 //cout<<valore<<" < "<<attuale->getValore()<<endl;
                 prec=attuale;
                 attuale=attuale->getNext();
@@ -112,38 +112,75 @@ class Lista{
                 tmp->setNext(attuale);
                 attuale->setPrev(tmp);
             }
+            else{
+                current=tmp;
+            }
+
 
             return this;
         }
 
-        void stampa(){
+        Lista<T>* deleteValue(T valore){
+            Nodo<T>* tmp = head;
+            while(tmp->getNext() && tmp->getValore()!= valore){
+                tmp=tmp->getNext();
+            }
+           
+            if(tmp->getValore()==valore){
+                
+                if(tmp==head){
+                    //cout<<"Trovato nodo in head"<<endl;
+                    head = tmp->getNext();
+                    head->setPrev(NULL);
+                    delete tmp;
+                } 
+                else if(tmp==current){
+                    //cout<<"Trovato nodo in current"<<endl;
+                    current=tmp->getPrev();
+                    current->setNext(NULL);
+                    delete tmp;
+                }
+                else{
+                    //cout<<"Trovato nodo in mezzo"<<endl;
+                    tmp->getPrev()->setNext(tmp->getNext());
+                    tmp->getNext()->setPrev(tmp->getPrev());
+                    delete tmp;
+                }
+                cout<<"Cancellato nodo con valore "<<valore<<endl;
+                return this;
+            }
+            cout<<"Nessun nodo con valore "<< valore << " trovato."<<endl;
+            return this;
+        }
+
+        void stampa() const {
             stampa(head);
             cout<<endl;
         }
 
-        void stampa3(){
+        void stampa3() const {
             stampa3(current);
             cout<<endl;
         }
 
-        void stampa(Nodo<T>* n){
+        void stampa(Nodo<T>* n) const {
             if(!n){ return; }
             cout<<n->getValore()<<" ";
             stampa(n->getNext());
         }
 
-        void stampa3(Nodo<T>* n){
+        void stampa3(Nodo<T>* n) const {
             if(!n){ return; }
             cout<<n->getValore()<<" ";
             stampa(n->getPrev());
         }
 
-        void stampa2(){
+        void stampa2() const {
             stampa2(current);
             cout<<endl;
         }
 
-        void stampa2(Nodo<T>* n){
+        void stampa2(Nodo<T>* n) const {
             if(!n){ return; }
             cout<<n->getValore()<<" ";
             stampa2(n->getPrev());
@@ -158,9 +195,8 @@ ostream& operator<<(ostream& os, const Lista<T>& l){
 
 int main(){ 
     Lista<int>* ls = new Lista<int>;
-    for(int i=0;i<10;i++){
-        ls->insertInOrder(rand()%100+1);
-    }
+    ls->insertInOrder(5)->insertInOrder(3)->insertInOrder(4)->insertInOrder(10)->insertInOrder(1);
+    ls->deleteValue(10)->deleteValue(1)->deleteValue(3)->deleteValue(4);
     ls->stampa();
     
 
