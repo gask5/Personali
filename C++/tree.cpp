@@ -5,6 +5,8 @@
 using namespace std;
 
 static HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
+static int total = 0;
+static int correct = 0;
 
 template <class T>
 class Node{
@@ -28,7 +30,10 @@ class Node{
         void setRight(Node<T>* _right) {right = _right;}
         void setLeft(Node<T>* _left) {left = _left;}
 
+        ~Node<T>() {}
+
         friend ostream& operator<<(ostream& os,const Node<T>& n){ 
+            
             os<<"Nodo: "<<&n << "   key = "<< n.value << " , left = " << n.left->getValue() << " , right = "<< n.right->getValue() << " , parent = "<< n.parent->getValue() ;
             if( (n.left && n.left->getValue()>= n.value) || (n.right && n.right->getValue() < n.value ) ){
                
@@ -39,8 +44,10 @@ class Node{
             else {
                 SetConsoleTextAttribute(hConsole, 10);
                 cout<< " PASS " << endl;
+                correct++;
                 SetConsoleTextAttribute(hConsole, 7);
                 }
+            total++;
             return os;
         }
 
@@ -97,7 +104,7 @@ class BST{
         }
 
         void canc(Node<T>* node, T key){
-            if(!node) return;
+            // if(!node) return; <- controllo non necessario;
             if(node->getLeft()&&node->getRight()){
                 Node<T>* successore = succ(node);
 
@@ -113,16 +120,19 @@ class BST{
 
                 Node<T>* padre = node->getParent();
 
+                if(child) child ->setParent(padre);
+
                 if(!padre) {
                     radice = child;
+                    delete node;
                     return;
                 }
 
                 if(node->getValue() >= padre->getValue()) padre->setRight(child);
                 else padre->setLeft(child);
 
-                if(child) child ->setParent(padre);
-
+                
+                delete node;
                 return;
                 
             }
@@ -151,6 +161,14 @@ class BST{
         
         void print() const{
             print(radice);
+            if(total==correct) SetConsoleTextAttribute(hConsole, 10);
+            else SetConsoleTextAttribute(hConsole, 12);
+
+            cout<<"Test "<< correct<<" / "<<total<<endl; 
+
+            SetConsoleTextAttribute(hConsole, 7);
+
+            total = correct = 0;
         }
 
         void print(Node<T> *node) const{
@@ -158,9 +176,7 @@ class BST{
             
             print(node->getRight());
             cout<<*node;
-            print(node->getLeft());
-            
-            
+            print(node->getLeft());       
         }
 
         
@@ -169,21 +185,25 @@ class BST{
 int main(){ 
     BST<float> tree;
 
-    //tree.insert(10)->insert(30)->insert(3)->insert(1)->insert(4)->insert(2)->insert(20)->insert(14);
+    // tree.insert(10)->insert(20);
 
-    for(int i = 0 ; i < 1000 ; i++){
-        tree.insert(rand()%5000+1);
+    for(int i = 0 ; i < 10 ; i++){
+        tree.insert(rand()%50+1);
     }
 
 
     cout<<"--------------- Before ----------------"<<endl;
     tree.print();
 
-    for(int i = 0 ; i < 1000 ; i++){
-        int n = rand()%5000+1;
+    for(int i = 0 ; i < 100 ; i++){
+        int n = rand()%50+1;
         tree.canc(n);
     }
-    //tree.canc(20);
+
+    // tree.canc(25);
+    // tree.print();
+    // tree.canc(20);
+    
     cout<<endl<<"--------------- After ----------------"<<endl;
     tree.print();
 
