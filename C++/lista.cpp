@@ -93,12 +93,12 @@ class Lista{
             }
             Nodo<T>* tmp = new Nodo<T>(valore); 
             Nodo<T>* prec = NULL;
-            Nodo<T>* attuale = head;
+            Nodo<T>* succ = head;
             //cout<<"Riga 97";
-            while(attuale && attuale->getValore()<valore){
+            while(succ && succ->getValore()<valore){
                 //cout<<valore<<" < "<<attuale->getValore()<<endl;
-                prec=attuale;
-                attuale=attuale->getNext();
+                prec=succ;
+                succ=succ->getNext();
             }
             //cout<<"Riga 102";
 
@@ -108,9 +108,9 @@ class Lista{
             }
             else head=tmp;
 
-            if(attuale){
-                tmp->setNext(attuale);
-                attuale->setPrev(tmp);
+            if(succ){
+                tmp->setNext(succ);
+                succ->setPrev(tmp);
             }
             else{
                 current=tmp;
@@ -165,7 +165,7 @@ class Lista{
 
         void stampa(Nodo<T>* n) const {
             if(!n){ return; }
-            cout<<n->getValore()<<" ";
+            cout<<"Nodo "<<n<<" con valore: "<<n->getValore()<<", next = " << n->getNext() << " prev = " << n->getPrev()<<endl;
             stampa(n->getNext());
         }
 
@@ -196,7 +196,7 @@ ostream& operator<<(ostream& os, const Lista<T>& l){
 int main(){ 
     Lista<int>* ls = new Lista<int>;
     ls->insertInOrder(5)->insertInOrder(3)->insertInOrder(4)->insertInOrder(10)->insertInOrder(1);
-    ls->deleteValue(10)->deleteValue(1)->deleteValue(3)->deleteValue(4);
+    //ls->deleteValue(10)->deleteValue(1)->deleteValue(3)->deleteValue(4);
     ls->stampa();
     
 

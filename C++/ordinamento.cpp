@@ -61,7 +61,7 @@ void r_selectionsort(int *v, int n){
 
 template <class T>
 int partition(T *v, int n){ // O(N)
-    T x = v[0]; //elemento pivot
+    T x = v[0]; // elemento pivot
     int i = -1; // indice che scorre da sinsitra verso destra 
     int j = n; // indice che scorre da destra verso sinistra
     do{ 
@@ -180,10 +180,10 @@ void insertionsort(int *v, int n) // caso ottimo O(n) // caso pessimo O(n^2) // 
 
 {
     static int passi = 0;
-    for (int i = 1; i < n; i++)
+    for (int i = 1; i < n; i++) //ciclo for da 1 a n
     {
         int j = i;
-        while (j > 0 && v[j - 1] > v[j])
+        while (j > 0 && v[j - 1] > v[j]) // while da j = i , sposto indietro finche v[j] non collocato nel modo esatto
         {
             scambia(v, j, j - 1);
             j--;

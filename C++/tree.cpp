@@ -1,6 +1,6 @@
 #include <iostream>
 #include <cstdlib>
-#include <windows.h> 
+#include <windows.h> //not working on Linux
 
 using namespace std;
 
@@ -174,9 +174,23 @@ class BST{
         void print(Node<T> *node) const{
             if(!node) return;
             
-            print(node->getRight());
+            print(node->getLeft());
             cout<<*node;
-            print(node->getLeft());       
+            print(node->getRight());       
+        }
+
+        void postOrder(Node<T> *node) const{
+            if(!node) return;
+            
+            postOrder(node->getLeft());
+            
+            postOrder(node->getRight());  
+
+            cout<<*node;   
+        }
+
+        void postOrder() const{
+            postOrder(radice);
         }
 
         
@@ -197,7 +211,7 @@ int main(){
 
     for(int i = 0 ; i < 100 ; i++){
         int n = rand()%50+1;
-        tree.canc(n);
+        //tree.canc(n);
     }
 
     // tree.canc(25);
@@ -208,4 +222,6 @@ int main(){
     tree.print();
 
     cout<<endl<<"--------------- END ----------------"<<endl;
+
+    tree.postOrder();
 }
