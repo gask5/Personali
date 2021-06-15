@@ -1,27 +1,64 @@
 #include <iostream>
+#include <time.h>
+#include <windows.h> //not working on Linux
 
 using namespace std;
 
+
+static HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
+
+void sleepcp(int milliseconds) // Cross-platform sleep function
+{
+    clock_t time_end;
+    time_end = clock() + milliseconds * CLOCKS_PER_SEC/1000;
+    while (clock() < time_end)
+    {
+    }
+}
+
 static int passi =0;
+
 void print(int *v, int n);
 void bubblesort(int *v, int n);
 void swap(int *v, int n1, int n2);
 void insertionsort(int *v, int n);
 void selectionsort(int *v, int n);
-const int min(int *v, int n);
+const int minimo(int *v, int n);
 int * merge(int *v1, int *v2, int n1 , int n2);
 void merge2(int *v, int n1 , int n2);
-
-
 void mergeSort(int *v, int n);
+int partition(int *v, int n);
+void quicksort(int *v, int n);
+
+int partition(int *v, int n){
+    int x = v[0]; //pivot
+    int i , j;
+    i = -1;
+    j = n;
+    do{
+        do i++; while (v[i]<x);
+        do j--; while (v[j]>x);
+        if(i<j) swap(v,i,j);
+    } while(i<j);
+    return j;
+}
+
+void quicksort(int *v, int n){
+    if (n<2) return;
+    int m = partition(v,n);
+    quicksort(v, m+1);
+    quicksort(v+m+1,n-(m+1));
+}
+
+
 
 
 void mergeSort(int *v, int n){
     if(n < 2) return;
     int m = n/2;
-    mergeSort(v, n-m);
-    mergeSort(v+(n-m), m);
-    merge2(v,n-m,m);
+    mergeSort(v, m);
+    mergeSort(v+m, n-m);
+    merge2(v,n,m);
 }
 
 int * merge(int *v1, int *v2, int n1 , int n2){
@@ -44,19 +81,20 @@ void merge2(int *v, int n1 , int n2){
     int *b;
     b = new int[n1+n2];
     int i, j , k;
-    i = j = k = 0;
-    while(i<n1 && j<n2){
-        if(v[i]<v[n1+j]) b[k++] = v[i++];
-        else b[k++] = v[n1+j++];
+    i = k = 0;
+    j = n2;
+    while(i<n2 && j<n1){
+        if(v[i]<v[j]) b[k++] = v[i++];
+        else b[k++] = v[j++];
         passi++;
     }
 
-    while(i<n1){
+    while(i<n2){
         b[k++] = v[i++];
         passi++;
     } 
-    while(j<n2){
-        b[k++] = v[n1+j++];
+    while(j<n1){
+        b[k++] = v[j++];
         passi++;
     } 
 
@@ -66,7 +104,7 @@ void merge2(int *v, int n1 , int n2){
     }
 }
 
-const int min(int *v, int n){
+const int minimo(int *v, int n){
     int min = 0;
     for(int i = 1; i < n; i ++){
         if(v[min] > v[i]) min = i;
@@ -77,7 +115,7 @@ const int min(int *v, int n){
 
 void selectionsort(int *v, int n){ // caso ottimo e pessimo O(n^2)
     for(int i = 0; i < n;i++){
-        swap(v, i , min(v+i,n-i) + i );
+        swap(v, i , minimo(v+i,n-i) + i );
     }
 
     cout<< endl << "Array ordinato con SELECTION SORT" << endl;
@@ -103,6 +141,32 @@ void print(int *v, int n){
     cout<<endl;
 }
 
+void swapP(int *v, int n1, int n2){
+    int tmp = v[n2];
+    
+    cout<< endl;
+    for(int i = 0; i<10; i++){
+        if(i==n1){
+            SetConsoleTextAttribute(hConsole, 6);
+            cout<< v[n1];
+        } 
+        else if(i==n2){
+            SetConsoleTextAttribute(hConsole, 10);
+            cout<< v[n2];
+        } 
+        else{
+            
+            cout<< v[i];
+        }
+        SetConsoleTextAttribute(hConsole, 7);
+        cout<<" ";
+    }
+    sleepcp(1000);
+    system("CLS");
+    v[n2] = v[n1];
+    v[n1] = tmp;
+}
+
 void swap(int *v, int n1, int n2){
     int tmp = v[n2];
     v[n2] = v[n1];
@@ -111,9 +175,9 @@ void swap(int *v, int n1, int n2){
 
 
 void bubblesort(int *v, int n){ 
-    for(int i = n ; n>1 ; n--){
-        for(int j = i - 1; j > 0; j--){
-            if(v[j]<v[j-1]) swap(v,j-1,j);
+    for(int i = n ; i > 0 ; i--){
+        for(int j = 0; j < i-1  ; j++){
+            if(v[j]>v[j+1]) swap(v,j+1,j);
         }
     }
     cout<< endl << "Array ordinato con BUBBLESORT" << endl;

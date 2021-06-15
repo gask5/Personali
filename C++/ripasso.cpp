@@ -15,11 +15,13 @@ int main(){
 
     print(a,N);
 
-    insertionsort(a,N);
+    quicksort(a,N);
 
     print(a,N);
 
-    cout<<endl<<"Passi eseguiti: "<< passi<<endl;
+    
+
+    // cout<<endl<<"Passi eseguiti: "<< passi<<endl;
 
 
 
