@@ -21,7 +21,7 @@ class A{
             cout<<"a = "<< a <<endl<< "b = " <<b<<endl<<endl;
         }
 
-        friend void saluta(A test){ // il metodo friend e` un metodo esterno, che pero messo dentro la classe, riesce ad accedere ai suoi membri
+        friend void saluta(A test){ // il metodo friend e` un metodo esterno, che però messo dentro la classe, riesce ad accedere ai suoi membri
             cout<<"ciao a tutti "<<test.a<<endl;
         }
 

@@ -1,10 +1,10 @@
 #include <iostream>
 #include <cstdlib>
-#include <windows.h> //not working on Linux
+// #include <windows.h> //not working on Linux
 
 using namespace std;
 
-static HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
+// static HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
 static int total = 0;
 static int correct = 0;
 
@@ -13,7 +13,6 @@ class Node{
     private:
         T value;
         Node<T>* parent, *right, *left;
-    
     public:
         Node(T _value) : value(_value){parent = right = left = NULL;}
 
@@ -34,18 +33,19 @@ class Node{
 
         friend ostream& operator<<(ostream& os,const Node<T>& n){ 
             
-            os<<"Nodo: "<<&n << "   key = "<< n.value << " , left = " << n.left->getValue() << " , right = "<< n.right->getValue() << " , parent = "<< n.parent->getValue() ;
+            os<<"\x1B[31m Nodo: \033[0m"<<&n << " \x1B[35m Key \033[0m = "<< n.value << " , \x1B[36m ← Left \033[0m = " << n.left->getValue() << " , \x1B[34m ➔ Right \033[0m = "<< n.right->getValue() << " , \x1B[33m Parent \033[0m = "<< n.parent->getValue() ;
             if( (n.left && n.left->getValue()>= n.value) || (n.right && n.right->getValue() < n.value ) ){
                
-                SetConsoleTextAttribute(hConsole, 12);
-                cout << " ERROR " << endl;
-                SetConsoleTextAttribute(hConsole, 7);
+                // SetConsoleTextAttribute(hConsole, 12);
+                cout << "\x1B[31m ✘ \033[0m\t\t" << endl;
+                // SetConsoleTextAttribute(hConsole, 7);
                 }
             else {
-                SetConsoleTextAttribute(hConsole, 10);
-                cout<< " PASS " << endl;
+                // SetConsoleTextAttribute(hConsole, 10);
+                cout<<"\x1B[32m √ \033[0m\t\t"<<endl;
+                // cout<< " PASS " << endl;
                 correct++;
-                SetConsoleTextAttribute(hConsole, 7);
+                // SetConsoleTextAttribute(hConsole, 7);
                 }
             total++;
             return os;
@@ -161,12 +161,7 @@ class BST{
         
         void print() const{
             print(radice);
-            if(total==correct) SetConsoleTextAttribute(hConsole, 10);
-            else SetConsoleTextAttribute(hConsole, 12);
-
             cout<<"Test "<< correct<<" / "<<total<<endl; 
-
-            SetConsoleTextAttribute(hConsole, 7);
 
             total = correct = 0;
         }
@@ -200,18 +195,19 @@ int main(){
     BST<float> tree;
 
     // tree.insert(10)->insert(20);
+    int N = 100;
 
-    for(int i = 0 ; i < 10 ; i++){
-        tree.insert(rand()%50+1);
+    for(int i = 0 ; i < N ; i++){
+        tree.insert(rand()%(N*5)+1);
     }
 
 
     cout<<"--------------- Before ----------------"<<endl;
     tree.print();
 
-    for(int i = 0 ; i < 100 ; i++){
-        int n = rand()%50+1;
-        //tree.canc(n);
+    for(int i = 0 ; i < N ; i++){
+        int n = rand()%(N*5)+1;
+        tree.canc(n);
     }
 
     // tree.canc(25);
@@ -221,7 +217,7 @@ int main(){
     cout<<endl<<"--------------- After ----------------"<<endl;
     tree.print();
 
-    cout<<endl<<"--------------- END ----------------"<<endl;
+    // cout<<endl<<"--------------- END ----------------"<<endl;
 
-    tree.postOrder();
+    // tree.postOrder();
 }
