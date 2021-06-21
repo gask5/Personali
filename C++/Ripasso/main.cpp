@@ -14,7 +14,7 @@ int main(){
         // t.insert(1);
         // t.insert(13);
 
-        for(int i=0; i<10 ; i++){
+        for(int i=0; i<20 ; i++){
                 t.insert(rand()%50+1);
         }
 

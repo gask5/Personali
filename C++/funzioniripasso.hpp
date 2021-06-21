@@ -1,11 +1,9 @@
 #include <iostream>
 #include <time.h>
-#include <windows.h> //not working on Linux
+#include "colors.h"
 
 using namespace std;
 
-
-static HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
 
 void sleepcp(int milliseconds) // Cross-platform sleep function
 {
@@ -21,6 +19,7 @@ static int passi =0;
 void print(int *v, int n);
 void bubblesort(int *v, int n);
 void swap(int *v, int n1, int n2);
+void swapP(int *v, int n1, int n2);
 void insertionsort(int *v, int n);
 void selectionsort(int *v, int n);
 const int minimo(int *v, int n);
@@ -118,7 +117,7 @@ void selectionsort(int *v, int n){ // caso ottimo e pessimo O(n^2)
         swap(v, i , minimo(v+i,n-i) + i );
     }
 
-    cout<< endl << "Array ordinato con SELECTION SORT" << endl;
+    //cout<< endl << "Array ordinato con SELECTION SORT" << endl;
 }
 
 void insertionsort(int *v, int n){
@@ -130,7 +129,7 @@ void insertionsort(int *v, int n){
         }
     }
 
-    cout<< endl << "Array ordinato con INSERTION SORT" << endl;
+    //cout<< endl << "Array ordinato con INSERTION SORT" << endl;
 }
 
 
@@ -147,22 +146,19 @@ void swapP(int *v, int n1, int n2){
     cout<< endl;
     for(int i = 0; i<10; i++){
         if(i==n1){
-            SetConsoleTextAttribute(hConsole, 6);
-            cout<< v[n1];
+            cout<<colors(v[n1],1);
         } 
         else if(i==n2){
-            SetConsoleTextAttribute(hConsole, 10);
-            cout<< v[n2];
+            cout<<colors(v[n2],2);
         } 
         else{
             
             cout<< v[i];
         }
-        SetConsoleTextAttribute(hConsole, 7);
         cout<<" ";
     }
     sleepcp(1000);
-    system("CLS");
+    system("clear");
     v[n2] = v[n1];
     v[n1] = tmp;
 }
@@ -180,5 +176,5 @@ void bubblesort(int *v, int n){
             if(v[j]>v[j+1]) swap(v,j+1,j);
         }
     }
-    cout<< endl << "Array ordinato con BUBBLESORT" << endl;
+    //cout<< endl << "Array ordinato con BUBBLESORT" << endl;
 }
